@@ -118,7 +118,7 @@ export default {
         async getList(i=1) {
             this.listLoading = true;
             let prm = {
-                "currentPage": i,
+                "pageNum": i,
                 "pageSize": this.pageSize,
             }
             const {
@@ -187,7 +187,7 @@ export default {
           this.form.agentId = null;
           this.form.userAccount = null;
             let prm = {
-              currentPage:1,
+              pageNum:1,
               pageSize:20
             };
             agentList(prm).then(res=>{
@@ -245,7 +245,7 @@ export default {
 
           this.listLoading = true;
           let prm = {
-            "currentPage": 1,
+            "pageNum": 1,
             "pageSize": this.pageSize,
             userName: this.searchInfo.name,
             userAccount: this.searchInfo.count,

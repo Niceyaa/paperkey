@@ -290,7 +290,7 @@
         this.optTitle = "添加信息";
         this.addVisible = true;
         let prm = {
-          currentPage:1,
+          pageNum:1,
           pageSize:20
         };
         agentList(prm).then(res=>{

@@ -253,7 +253,7 @@
 
       async getReceivers(i=1) {
         let prm = {
-          "currentPage": i,
+          "pageNum": i,
           "pageSize": this.pageSize,
         }
         const {
@@ -346,7 +346,7 @@
       },
       getList(v=1){
         let prm = {
-          "currentPage": v,
+          "pageNum": v,
           "pageSize": this.pageSize,
           orderId:this.orderId
         }
@@ -360,7 +360,7 @@
       },
       searchList(){
         let prm = {
-          "currentPage": 1,
+          "pageNum": 1,
           "pageSize": this.pageSize,
           name:this.searchInfo.name,
           "retrieveProcessId": this.processId,

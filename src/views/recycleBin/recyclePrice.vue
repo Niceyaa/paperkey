@@ -214,7 +214,7 @@
         this.processId = val;
         console.log(this.processId)
         let prm = {
-          "currentPage": 1,
+          "pageNum": 1,
           "pageSize": this.pageSize,
           name:null,
           "retrieveProcessId": val,
@@ -228,7 +228,7 @@
     methods: {
       getRecycleList(){
         let prm = {
-          currentPage:1,
+          pageNum:1,
           pageSize:20,
         }
         recycleList(prm).then(res=>{
@@ -237,7 +237,7 @@
       },
       getAgentList(){
         let prm = {
-          currentPage:1,
+          pageNum:1,
           pageSize:20
         };
         agentList(prm).then(res=>{
@@ -256,7 +256,7 @@
       },
       getList(v=1){
         let prm = {
-          "currentPage": v,
+          "pageNum": v,
           "pageSize": this.pageSize,
           "retrieveProcessId": this.processId,
           name:null
@@ -384,7 +384,7 @@
       },
       searchList(){
         let prm = {
-          "currentPage": 1,
+          "pageNum": 1,
           "pageSize": this.pageSize,
           name:this.searchInfo.name,
           "retrieveProcessId": this.processId,
@@ -401,7 +401,7 @@
       showAll(){
         this.retrieveProcessId = null
         let prm = {
-          "currentPage":1,
+          "pageNum":1,
           "pageSize": this.pageSize,
           name:null,
           retrieveProcessId:null

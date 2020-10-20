@@ -292,7 +292,7 @@
       },
       getAgentList(){
         let prm = {
-          currentPage:1,
+          pageNum:1,
           pageSize:20
         }
         agentList(prm).then(res=>{
@@ -312,7 +312,7 @@
 
       getRecycleList(){
         let prm = {
-          currentPage:1,
+          pageNum:1,
           pageSize:20
         }
         recycleList(prm).then(res=>{
@@ -329,7 +329,7 @@
       },
       getList(v=1){
         let prm = {
-          "currentPage": v,
+          "pageNum": v,
           "pageSize": this.pageSize,
         }
         orderList(prm).then(res=>{
@@ -432,7 +432,7 @@
       },
       searchList(){
         let prm = {
-          "currentPage": 1,
+          "pageNum": 1,
           "pageSize": this.pageSize,
           "retrieveProcessId": this.currentProcess,
           agentId:this.currentAgent,

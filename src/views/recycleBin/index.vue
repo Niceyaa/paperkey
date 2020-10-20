@@ -74,19 +74,14 @@
 
 
     <el-dialog class="inner-dialog" title="城市选择" :visible.sync="cityFlag">
-      <!--<el-input
-        placeholder="输入关键字进行过滤"
-        v-model="filterText">
-      </el-input>-->
-
       <el-tree
-        class="filter-tree"
-        node-key="menuId"
+        node-key="cityId"
         :data="cityData"
         :props="defaultProps"
-        default-expand-all
+        show-checkbox
+        check-strictly
         highlight-current
-        @node-click="handleCityItemClick"
+        @check-change="handleCityItemClick"
         ref="menuTree">
       </el-tree>
       <div slot="footer" class="dialog-footer">
@@ -151,6 +146,7 @@
   export default {
     data() {
       return {
+        checkedId:null,
         currentIdType:null,
         cityFlag:false,
         defaultProps: {
@@ -202,7 +198,8 @@
         this.cityFlag = true;
         let prm = {
           pageNum:1,
-          pageSize:10
+          pageSize:100,
+          parentCityId: 0
         };
         cityTreeList(prm).then(res=>{
           this.cityData = res.data.result.list;
@@ -210,9 +207,16 @@
         })
       },
 
-      handleCityItemClick(v){
-        this.currentCityInfo = v;
-        console.log("v",v)
+      handleCityItemClick(v,checked,node){
+        if(checked === true) {
+          this.currentCityInfo = v;
+          this.checkedId = v.cityId;
+          this.$refs.menuTree.setCheckedKeys([v.cityId]);
+        } else {
+          if (this.checkedId === v.cityId) {
+            this.$refs.menuTree.setCheckedKeys([v.cityId]);
+          }
+        }
       },
       getChooseCity(){
         this.form.city = this.currentCityInfo.name;
@@ -222,7 +226,7 @@
 
       getAgentList(){
         let prm = {
-          currentPage:1,
+          pageNum:1,
           pageSize:20
         }
         agentList(prm).then(res=>{
@@ -232,7 +236,7 @@
 
       getRecycleList(v=1){
         let prm = {
-          currentPage:v,
+          pageNum:v,
           pageSize:this.pageSize,
           agentId:this.currentAgent,
           idNum:this.searchInfo.idNum,

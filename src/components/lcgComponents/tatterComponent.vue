@@ -79,7 +79,7 @@
       },
       getBagList(){
         let prm = {
-          "currentPage": 1,
+          "pageNum": 1,
           "pageSize": 20,
           paperShredderId:this.tatterId
         }

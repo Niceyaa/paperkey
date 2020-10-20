@@ -228,7 +228,7 @@
       },
       getList(v=1){
         let prm = {
-          "currentPage": v,
+          "pageNum": v,
           "pageSize": this.pageSize
         }
         bagPutInList(prm).then(res=>{
@@ -241,7 +241,7 @@
       },
       searchList(){
         let prm = {
-          "currentPage": 1,
+          "pageNum": 1,
           "pageSize": this.pageSize,
           "inStorageTimeEnd": this.searchInfo.endTime,
           "inStorageTimeStart": this.searchInfo.startTime,

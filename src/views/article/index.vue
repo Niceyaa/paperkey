@@ -133,7 +133,7 @@ export default {
     categoryId(v){
       if (v === "a"){
         let prm = {
-          "currentPage": 1,
+          "pageNum": 1,
           "pageSize": this.pageSize
         };
         articleList(prm).then(res=>{
@@ -173,7 +173,7 @@ export default {
     getArticleList(pageNum=1,cId){
       let prm = {
         "categoryId": cId,
-        "currentPage": pageNum,
+        "pageNum": pageNum,
         "pageSize": this.pageSize
       };
       articleList(prm).then(res=>{
@@ -183,7 +183,7 @@ export default {
     },
     getArticleCategoryList(){
       let prm = {
-        currentPage:1,
+        pageNum:1,
         pageSize:30
       };
       articleCategoryList(prm).then(res=>{
@@ -231,7 +231,7 @@ export default {
     searchList(){
         let prm = {
           "categoryId": this.categoryId,
-          "currentPage": 1,
+          "pageNum": 1,
           "pageSize": this.pageSize,
           title:this.keys
         };

@@ -9,7 +9,8 @@ const service = axios.create({
   // baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // baseURL: "http://192.168.1.57:19082/zmsys-auth/", // url = base url + request url
   // baseURL: "/dpc", // url = base url + request url
-  baseURL: "http://192.168.1.57:19082",
+  // baseURL: "http://192.168.1.165:19082",
+  baseURL: "http://192.168.2.31:19082",
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
@@ -22,7 +23,6 @@ service.interceptors.request.use(
       config.data = qs.stringify(config.data);
     }*/
 
-    console.log("请求配置信息",config);
     if (store.getters.token) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
@@ -79,7 +79,7 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log('err111' ,error.response.status) // for debug
+    // console.log('err111' ,error.response.status) // for debug
     if (error.response.status === 401){
 
         // to re-login

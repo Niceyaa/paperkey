@@ -38,7 +38,7 @@
     <div class="content-container">
 
       <el-row :gutter="20">
-        <el-col :span="8">
+        <el-col :span="9">
           <el-divider content-position="left">省</el-divider>
           <div class="grid-content bg-purple">
             <el-table
@@ -49,9 +49,6 @@
                 prop="name"
                 label="名称"
                 width="70">
-                <template slot-scope="scope">
-                  <span @click="changeProId(scope.row)">{{scope.row.name}}</span>
-                </template>
               </el-table-column>
               <el-table-column
                 prop="code"
@@ -60,17 +57,18 @@
               </el-table-column>
               <el-table-column
                 label="操作"
-                min-width="220"
+                min-width="300"
                 fixed="right">
                 <template slot-scope="scope">
-                  <el-button @click="editHandle(scope.row)" size="mini" type="primary">编辑</el-button>
-                  <el-button size="mini" type="danger" @click="deleteCity(scope.row)">删除</el-button>
+                  <el-button size="mini" type="success" @click="changeProId(scope.row)">市管理</el-button>
+                  <el-button @click="editProHandle(scope.row,'pro')" size="mini" type="primary">编辑</el-button>
+                  <el-button size="mini" type="danger" @click="deleteCity(scope.row,'pro')">删除</el-button>
                   <el-button size="mini" type="warning" @click="addProvince(scope.row)">添加</el-button>
                 </template>
               </el-table-column>
             </el-table>
             <el-pagination
-              @current-change="handleCurrentChange"
+              @current-change="handleCurrentChangePro"
               :current-page.sync="currentPage"
               :page-size="pageSize"
               layout="total,prev, pager, next, jumper"
@@ -79,7 +77,7 @@
           </div>
         </el-col>
 
-        <el-col :span="8">
+        <el-col :span="9">
           <el-divider content-position="left">市</el-divider>
           <div class="grid-content bg-purple-light">
             <el-table
@@ -90,9 +88,6 @@
                 prop="name"
                 label="名称"
                 width="70">
-                <template slot-scope="scope">
-                  <span @click="changeCityId(scope.row)">{{scope.row.name}}</span>
-                </template>
               </el-table-column>
               <el-table-column
                 prop="code"
@@ -102,25 +97,27 @@
               <el-table-column
                 label="操作"
                 fixed="right"
-                min-width="220">
+                min-width="300">
                 <template slot-scope="scope">
-                  <el-button @click="editHandle(scope.row)" size="mini" type="primary">编辑</el-button>
-                  <el-button size="mini" type="danger" @click="deleteCity(scope.row)">删除</el-button>
+
+                  <el-button size="mini" type="success" @click="changeCityId(scope.row)">县管理</el-button>
+                  <el-button @click="editCityHandle(scope.row,'city')" size="mini" type="primary">编辑</el-button>
+                  <el-button size="mini" type="danger" @click="deleteCity(scope.row,'city')">删除</el-button>
                   <el-button size="mini" type="warning" @click="addCity(scope.row)">添加</el-button>
                 </template>
               </el-table-column>
-            </el-table><!--
+            </el-table>
             <el-pagination
-              @current-change="handleCurrentChange"
+              @current-change="handleCurrentChangeCity"
               :current-page.sync="currentPage"
               :page-size="pageSize"
               layout="total,prev, pager, next, jumper"
-              :total="total">
-            </el-pagination>-->
+              :total="totalCity">
+            </el-pagination>
           </div>
         </el-col>
 
-        <el-col :span="8">
+        <el-col :span="6">
           <el-divider content-position="left">县</el-divider>
           <div class="grid-content bg-purple">
             <el-table
@@ -138,58 +135,25 @@
                 width="80">
               </el-table-column>
               <el-table-column
-                fixed="right"
                 label="操作"
-                min-width="130">
+                fixed="right"
+                min-width="150">
                 <template slot-scope="scope">
-                  <el-button @click="editHandle(scope.row)" size="mini" type="primary">编辑</el-button>
-                  <el-button size="mini" type="danger" @click="deleteCity(scope.row)">删除</el-button>
+                  <el-button @click="editHandle(scope.row,'county')" size="mini" type="primary">编辑</el-button>
+                  <el-button size="mini" type="danger" @click="deleteCity(scope.row,'county')">删除</el-button>
                 </template>
               </el-table-column>
-            </el-table><!--
+            </el-table>
             <el-pagination
-              @current-change="handleCurrentChange"
+              @current-change="handleCurrentChangeCounty"
               :current-page.sync="currentPage"
               :page-size="pageSize"
               layout="total,prev, pager, next, jumper"
-              :total="total">
-            </el-pagination>-->
+              :total="totalCounty">
+            </el-pagination>
           </div>
         </el-col>
       </el-row>
-     <!-- <div class="right-container">
-        <el-table
-          :data="allCityList"
-          border
-          style="width: 100%">
-          <el-table-column
-            prop="name"
-            label="名称"
-            width="90">
-          </el-table-column>
-          <el-table-column
-            prop="code"
-            label="城市编码"
-            width="80">
-          </el-table-column>
-          <el-table-column
-            label="操作"
-            min-width="210">
-            <template slot-scope="scope">
-              <el-button @click="editHandle(scope.row)" size="mini" type="primary">编辑</el-button>
-              <el-button size="mini" type="danger" @click="deleteCity(scope.row)">删除</el-button>
-              <el-button size="mini" type="warning" @click="addCity(scope.row)">添加</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-        <el-pagination
-          @current-change="handleCurrentChange"
-          :current-page.sync="currentPage"
-          :page-size="pageSize"
-          layout="total,prev, pager, next, jumper"
-          :total="total">
-        </el-pagination>
-      </div>-->
     </div>
   </div>
 </template>
@@ -201,6 +165,13 @@ import qs from "qs"
     name: 'index',
     data() {
       return {
+        proParentId:null,
+        cityParentId:null,
+        countyParentId:null,
+
+        totalCity:null,
+        totalCounty:null,
+
         addType:null,
         provinceId:null,
         townId:null,
@@ -226,39 +197,76 @@ import qs from "qs"
         },
         cityId:null,
 
-        pageSize:15,
+        pageSize:10,
         currentPage:1,
         total:0
       };
     },
     watch:{
-      provinceId(v){
-          let prm = {
-            "pageNum": 1,
-            "pageSize": 15,
-            parentCityId:v
-          }
-        cityTreeList(prm).then(res=>{
-            this.cityList = res.data.result.list
-            this.total = res.data.result.total
-          })
-      }
     },
     methods: {
-      getList(i=1){
+      getList(i=1,type){
         let prm = {
           "pageNum": i,
-          "pageSize": 15,
+          "pageSize": this.pageSize,
           parentCityId:this.parentId
         }
-        cityTreeList(prm).then(res=>{
+        cityList(prm).then(res=>{
           this.allCityList = res.data.result.list
           this.total = res.data.result.total
         })
       },
-      handleCurrentChange(v){
+      handleCurrentChangePro(v){
+        this.parentId = 0
         this.getList(v)
       },
+      handleCurrentChangeCity(v){
+        let prm = {
+          "pageNum": v,
+          "pageSize": this.pageSize,
+          parentCityId:this.proParentId
+        }
+        cityList(prm).then(res=>{
+          this.cityList = res.data.result.list
+          this.totalCity = res.data.result.total
+        })
+      },
+      handleCurrentChangeCounty(v){
+        let prm = {
+          "pageNum": v,
+          "pageSize": this.pageSize,
+          parentCityId:this.cityParentId
+        }
+        cityList(prm).then(res=>{
+          this.countyList = res.data.result.list
+          this.totalCounty = res.data.result.total
+        })
+      },
+      editProHandle(info){
+        this.cityId = info.cityId;
+        this.addFlag = true;
+        this.permissionId = info.permissionId;
+        this.diaTitle = "修改城市";
+        this.type = 'pro'
+        this.form.name = info.name;
+        this.form.code = info.code;
+        this.form.pinyin = info.pinyin;
+        this.parentId = info.parentCityId;
+        this.proParentId = info.parentCityId;
+      },
+      editCityHandle(info){
+        this.cityId = info.cityId;
+        this.addFlag = true;
+        this.permissionId = info.permissionId;
+        this.diaTitle = "修改城市";
+        this.form.name = info.name;
+        this.form.code = info.code;
+        this.form.pinyin = info.pinyin;
+        this.parentId = info.parentCityId;
+        this.CityParentId = info.parentCityId;
+        this.type = 'city'
+      },
+
       editHandle(info){
         this.cityId = info.cityId;
         this.addFlag = true;
@@ -268,6 +276,8 @@ import qs from "qs"
         this.form.code = info.code;
         this.form.pinyin = info.pinyin;
         this.parentId = info.parentCityId;
+        this.countyParentId = info.parentCityId;
+        this.type = 'county'
       },
       saveHandle(){
         if (this.diaTitle === "修改城市"){
@@ -284,7 +294,13 @@ import qs from "qs"
                 type:"success",
                 message:"修改成功"
               })
-              this.getList();
+              if (this.type === 'pro'){
+                this.handleCurrentChangePro(1)
+              }else if (this.type === 'city'){
+                this.handleCurrentChangeCity(1)
+              }else if (this.type === 'county'){
+                this.handleCurrentChangeCounty(1)
+              }
               this.addFlag = false
             }
           })
@@ -301,7 +317,9 @@ import qs from "qs"
                 type:"success",
                 message:"添加成功"
               })
-              this.getList();
+             /* this.parentId = 0
+              this.getList();*/
+              this.handleCurrentChangeCity(1);
               this.addFlag = false
             }
           })
@@ -318,7 +336,10 @@ import qs from "qs"
                 type:"success",
                 message:"添加成功"
               })
-              this.getList();
+              /*this.parentId = 0
+              this.getList();*/
+              this.handleCurrentChangeCounty(1);
+
               this.addFlag = false
             }
           })
@@ -341,7 +362,7 @@ import qs from "qs"
           })
         }
       },
-      deleteCity(info){
+      deleteCity(info,type){
         this.$confirm('此操作将永久删除该城市, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -356,7 +377,33 @@ import qs from "qs"
                 message: '恭喜你，删除成功',
                 type: 'success'
               })
-             this.getList();
+              if (type === 'pro'){
+                this.parentId = 0;
+                this.cityList = null;
+                this.countyList = null;
+                this.getList()
+              }else if (type === 'city'){
+                this.countyList = null
+                let prm = {
+                  "pageNum": 1,
+                  "pageSize": this.pageSize,
+                  parentCityId:this.proParentId
+                }
+                cityList(prm).then(res=>{
+                  this.cityList = res.data.result.list
+                  this.totalCity = res.data.result.total
+                })
+              }else if (type === 'county'){
+                let prm = {
+                  "pageNum": 1,
+                  "pageSize": this.pageSize,
+                  parentCityId:this.cityParentId
+                }
+                cityList(prm).then(res=>{
+                  this.countyList = res.data.result.list
+                  this.totalCounty = res.data.result.total
+                })
+              }
             }
           })
         }).catch(() => {
@@ -371,6 +418,7 @@ import qs from "qs"
         this.diaTitle = "添加城市"
         this.addType = "province"
         this.parentId = info.cityId;
+        this.proParentId = info.cityId;
         this.form.name = null
         this.form.code = null
         this.form.pinyin = null
@@ -380,6 +428,7 @@ import qs from "qs"
         this.diaTitle = "添加城市"
         this.addType = "city"
         this.parentId = info.cityId;
+        this.cityParentId = info.cityId;
         this.form.name = null
         this.form.code = null
         this.form.pinyin = null
@@ -418,31 +467,36 @@ import qs from "qs"
         this.getList()
       },
       changeProId(info){
+        this.parentId = info.cityId
+        this.proParentId = info.cityId
         this.cityList = null;
         this.countyList = null;
         let prm = {
           "pageNum": 1,
-          "pageSize": 30,
-          parentCityId:info.cityId
+          "pageSize": this.pageSize,
+          parentCityId:this.parentId
         }
         cityList(prm).then(res=>{
           this.cityList = res.data.result.list
-          this.total = res.data.result.total
+          this.totalCity = res.data.result.total
         })
       },
       changeCityId(info){
+        this.parentId = info.cityId
+        this.cityParentId = info.cityId
         let prm = {
           "pageNum": 1,
-          "pageSize": 30,
-          parentCityId:info.cityId
+          "pageSize": this.pageSize,
+          parentCityId:this.parentId
         }
         cityList(prm).then(res=>{
           this.countyList = res.data.result.list
-          this.total = res.data.result.total
+          this.totalCounty = res.data.result.total
         })
       }
     },
     mounted() {
+      this.parentId = 0
       this.getList();
     }
   };

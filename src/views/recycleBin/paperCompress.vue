@@ -216,7 +216,7 @@
       },
       async getReceivers(i=1) {
         let prm = {
-          "currentPage": i,
+          "pageNum": i,
           "pageSize": this.pageSize,
         }
         const {

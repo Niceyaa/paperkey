@@ -487,15 +487,19 @@ export default {
     },
     saveHandle(){
       if (this.optType === "add"){
-        let prm = {
-          "ico": this.form.ico,
-          // "menuId": this.currentMenuItem.menuId,
-          "menuPermissions": [
+        let tt = null
+        if (this.formType === 0){
+          tt = [
             {
               "permissionId": this.selectLimit.permissionId,
               subPermissionIds:[this.selectLimit.subPermissionId]
             }
-          ],
+          ]
+        }
+        let prm = {
+          "ico": this.form.ico,
+          // "menuId": this.currentMenuItem.menuId,
+          "menuPermissions": tt,
           "name": this.form.name,
           "pid": this.rootMenu?this.currentMenuItem.pid:this.currentMenuItem.menuId,
           "route": this.form.route,

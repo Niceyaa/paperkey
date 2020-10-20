@@ -177,7 +177,7 @@
         addHandle(){
           this.addFlag = true;
           let prm = {
-            "currentPage": 1,
+            "pageNum": 1,
             "pageSize": this.innerPageSize,
           };
           userList(prm).then(res=>{
@@ -192,7 +192,7 @@
         },
         innerPageChange(v){
           let prm = {
-            "currentPage": v,
+            "pageNum": v,
             "pageSize": this.innerPageSize,
           };
           userList(prm).then(res=>{

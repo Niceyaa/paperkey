@@ -371,8 +371,7 @@ export const asyncRoutes = [
   },*/
 
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
-  ,
+  { path: '*', redirect: '/404', hidden: true },
   {
     path: '/limits',
     component: Layout,
@@ -449,12 +448,39 @@ export const asyncRoutes = [
     path: '/integration',
     component: Layout,
     redirect: '/integration/index',
+    name: '积分商城管理 ',
+    meta: { title: '积分商城管理 ', icon: 'documentation', },
     children: [
+      {
+        path: 'goodsClassify',
+        component: () => import('@/views/integration/goodsClassify'),
+        name: '商品分类',
+        meta: { title: '商品分类 ', icon: 'documentation', }
+      },
+      {
+        path: 'goods',
+        component: () => import('@/views/integration/goods'),
+        name: '商品',
+        meta: { title: '商品', icon: 'documentation', }
+      },
+      {
+        path: 'order',
+        component: () => import('@/views/integration/order'),
+        name: '订单 ',
+        meta: { title: '订单 ', icon: 'documentation', }
+      },
       {
         path: 'index',
         component: () => import('@/views/integration/index'),
-        name: '积分商城管理 ',
-        meta: { title: '积分商城管理 ', icon: 'documentation', }
+        name: '出入库记录 ',
+        meta: { title: '出入库记录 ', icon: 'documentation', }
+      },
+      {
+        path: 'goodsPic',
+        component: () => import('@/views/integration/goodsPic'),
+        name: '商品图片 ',
+        hidden:true,
+        meta: { title: '商品图片 ', icon: 'documentation', }
       }
     ]
   },
@@ -540,7 +566,7 @@ export const asyncRoutes = [
       }
     ]
   },
-  {
+  /*{
     path: '/newOne',
     component: Layout,
     redirect: '/newOne/index',
@@ -552,7 +578,7 @@ export const asyncRoutes = [
         meta: { title: 'test', icon: 'user', noCache: true, roles: "admin" }
       }
     ]
-  },
+  },*/
   {
     path: '/roleLimit',
     component: Layout,

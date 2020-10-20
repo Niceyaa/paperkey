@@ -1,23 +1,24 @@
 <template>
   <div class="app-container">
 
+    <el-row class="user-top">
+      <el-button type="primary" plain @click="addOpen">添加代理商</el-button>
+    </el-row>
+
     <el-dialog class="inner-dialog" title="城市选择" :visible.sync="cityFlag">
-      <el-input
-        placeholder="输入关键字进行过滤"
-        v-model="filterText">
-      </el-input>
 
       <el-tree
-        class="filter-tree"
-        node-key="menuId"
+        node-key="cityId"
         :data="cityData"
         :props="defaultProps"
-        default-expand-all
-        :filter-node-method="filterNode"
+        show-checkbox
+        check-strictly
         highlight-current
-        @node-click="handleCityItemClick"
+        check-on-click-node
+        @check-change="handleCityItemClick"
         ref="menuTree">
       </el-tree>
+
       <div slot="footer" class="dialog-footer">
         <el-button @click="innerFlag = false">取 消</el-button>
         <el-button type="primary" @click="getChooseCity">确 定</el-button>
@@ -35,10 +36,6 @@
       </el-col>
       <el-button plain type="primary" @click="searchList">搜索</el-button>
       <el-button plain type="warning" @click="resetData">重置</el-button>
-    </el-row>
-
-    <el-row class="user-top">
-      <el-button type="primary" plain @click="addOpen">添加代理商</el-button>
     </el-row>
 
     <el-dialog :title="diaTitle" :visible.sync="addFlag">
@@ -75,11 +72,6 @@
       :data="tableData"
       border
       style="width: 100%">
-     <!-- <el-table-column
-        prop="agentId"
-        label="代理商Id"
-        width="120">
-      </el-table-column>-->
       <el-table-column
         prop="name"
         label="名称"
@@ -188,9 +180,16 @@
       };
     },
     methods: {
-      handleCityItemClick(v){
-        this.currentCityInfo = v;
-        console.log(v)
+      handleCityItemClick(v,checked){
+        if(checked === true) {
+          this.currentCityInfo = v;
+          this.checkedId = v.cityId;
+          this.$refs.menuTree.setCheckedKeys([v.cityId]);
+        } else {
+          if (this.checkedId === v.cityId) {
+            this.$refs.menuTree.setCheckedKeys([v.cityId]);
+          }
+        }
       },
 
       handleCurrentChange(v){
@@ -216,7 +215,7 @@
 
       getList(v=1){
         let prm = {
-          "currentPage": v,
+          "pageNum": v,
           "pageSize":this.pageSize,
         }
         agentList(prm).then(res=>{
@@ -323,7 +322,7 @@
       async searchList(){
         this.listLoading = true;
         let prm = {
-          "currentPage": 1,
+          "pageNum": 1,
           "pageSize": this.pageSize,
           name: this.search.name,
           idNum: this.search.num

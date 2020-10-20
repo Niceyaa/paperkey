@@ -108,7 +108,7 @@
     methods: {
       searchList(){
         let prm = {
-          currentPage:1,
+          pageNum:1,
           pageSize:this.pageSize,
           categoryName:this.searchVal
         }
@@ -123,7 +123,7 @@
       },
       getList(v=1){
         let prm = {
-          currentPage:v,
+          pageNum:v,
           pageSize:this.pageSize
         }
         articleCategoryList(prm).then(res=>{

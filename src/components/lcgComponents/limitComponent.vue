@@ -369,6 +369,7 @@
         addRolePermission(prm).then(res=>{
           if (res.data.code === 200){
             this.$message({
+
               type:"success",
               message:"添加成功"
             })
