@@ -12,7 +12,8 @@
         :collapse-transition="true"
         mode="vertical"
       >
-        <sidebar-item v-for="route in permission_routes" :key="route.path" :item="route" :base-path="route.path" />
+        <sidebar-item v-for="route in tempRoutes" :key="route.path" :item="route" :base-path="route.path" />
+<!--        <sidebar-item v-for="route in permission_routes" :key="route.path" :item="route" :base-path="route.path" />-->
       </el-menu>
     </el-scrollbar>
   </div>
@@ -28,34 +29,58 @@ import variables from '@/styles/variables.scss'
 export default {
   data(){
     return{
-      allRoutes:[]
+      allRoutes:[],
+      tempRoutes:[]
     }
   },
   mounted() {
-   /* console.log(1111111111)
     let prm = {
-      pageSize:15,
+      pageSize:100,
       pageNum:1
     }
     menuList(prm).then(res=>{
       let {result} = res.data;
       this.allRoutes = result.list
-      for (let j = 0;j<this.allRoutes.length;j++){
-        this.allRoutes[j] = this.formatMenus(this.allRoutes[j])
+      for (let i = 0;i<this.allRoutes.length;i++){
+        if (this.allRoutes[i].subMenus&&this.allRoutes[i].subMenus.length>0){
+          this.tempRoutes.push({
+            meta:{title:this.allRoutes[i].name,icon:this.allRoutes[i].ico},
+            name:this.allRoutes[i].name,
+            path:this.allRoutes[i].route?this.allRoutes[i].route:`${i}`,
+            children:this.formatMenus(this.allRoutes[i].subMenus)
+          })
+        }else{
+          this.tempRoutes.push({
+            meta:{title:this.allRoutes[i].name,icon:this.allRoutes[i].ico},
+            name:this.allRoutes[i].name,
+            path:this.allRoutes[i].route?this.allRoutes[i].route:`${i}`,
+          })
+        }
+        // this.tempRoutes = this.formatMenus(this.allRoutes[i])
       }
+      console.log("temp",this.tempRoutes)
+
       console.log("all",this.allRoutes)
-    })*/
+    })
   },
   methods:{
     formatMenus(menu){
-      menu.meta = {title:menu.name,ico:item.ico}
-      menu.children = menu.subMenus
-      if (menu.subMenus&&menu.subMenus.length>0){
-        for (let i = 0;i<menu.subMenus.length;i++){
-          this.formatMenus(menu.subMenus[i])
+      let all = []
+      for (let i= 0;i<menu.length;i++){
+        let temp = {}
+        temp.meta = {title:menu[i].name,icon:menu[i].ico}
+        temp.path = menu[i].route
+        temp.name = menu[i].name
+        if (menu[i].subMenus&&menu[i].subMenus.length>0){
+          temp.children = menu[i].subMenus
+          for (let i = 0;i<temp.children.length;i++){
+            this.formatMenus(temp.children[i])
+          }
         }
+        all.push(temp)
       }
-      return menu
+
+      return all
     }
   },
   components: { SidebarItem, Logo },

@@ -123,21 +123,21 @@
     watch:{
       photoPrm(v){
         if (v.length>0&&v.length === this.fileArr.length){
-           let prm = {
-                commodityId: this.goodsId,
-                "photos": v
-              };
-              goodsPicOpt(prm).then(res=>{
-                if (res.data.code === 200){
-                  this.$message({
-                    type:"success",
-                    message:"添加成功"
-                  });
-                  this.$refs.uploadNode.clearFiles()
-                  this.getList();
-                  this.addFlag = false
-                }
-              })
+          let prm = {
+            commodityId: this.goodsId,
+            "photos": v
+          };
+          goodsPicOpt(prm).then(res=>{
+            if (res.data.code === 200){
+              this.$message({
+                type:"success",
+                message:"添加成功"
+              });
+              this.$refs.uploadNode.clearFiles()
+              this.getList();
+              this.addFlag = false
+            }
+          })
         }
       }
     },
@@ -281,11 +281,11 @@
                   method:'post',
                   data:requestData
                 });
-                  let tempUrl = result.host + '/' + fileKey
-                  this.photoPrm.push({
-                    "commodityPhotoUrl": tempUrl,
-                    "isCover": this.coverArr[idx]
-                  })
+                let tempUrl = result.host + '/' + fileKey
+                this.photoPrm.push({
+                  "commodityPhotoUrl": tempUrl,
+                  "isCover": this.coverArr[idx]
+                })
               })
             })
 
@@ -350,7 +350,7 @@
       },
     },
     mounted() {
-      this.goodsId = 1
+      this.goodsId = parseInt(this.$route.query.goodsId)
       this.getList()
     }
   }

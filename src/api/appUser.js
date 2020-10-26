@@ -1,42 +1,49 @@
 import request from "@/utils/request"
 
-export function agentList(data){
+export function invoiceList(data){
   return request({
-    url:"/zmsys-agent/sys/agent/queryAgent",
+    url:"/zmsys-user/sys/userInvoice/getUserInvoiceList",
     method: "post",
     data
   })
 }
 
-export function agentAdd(data){
+export function invoiceAdd(data){
   return request({
-    url:"/zmsys-agent/sys/agent/addAgent",
+    url:"/zmsys-user/sys/userInvoice/addUserInvoice",
     method: "post",
     data
   })
 }
 
-export function agentUpdate(data){
+export function invoiceUpdate(data){
   return request({
-    url:"/zmsys-agent/sys/agent/updateAgent",
+    url:"/zmsys-user/sys/userInvoice/updateUserInvoice",
     method: "post",
     data
   })
 }
 
-export function agentDelete(data){
+export function invoiceDelete(data){
   return request({
-    url:"/zmsys-agent/sys/agent/deleteAgent",
+    url:"/zmsys-user/sys/userInvoice/delUserInvoice",
     method: "post",
     data
   })
 }
 
-
-//代理商聯系人
-export function contactList(data){
+export function invoiceDeal(data){
   return request({
-    url:"/zmsys-agent/sys/contact/queryContactList",
+    url:"/zmsys-user/sys/userInvoice/invoiceHandle",
+    method: "post",
+    data
+  })
+}
+
+//快遞處理
+export function expressDeal(data){
+  return request({
+    url:"/zmsys-user/sys/userExpress/expressHandle",
     method: "post",
     data
   })

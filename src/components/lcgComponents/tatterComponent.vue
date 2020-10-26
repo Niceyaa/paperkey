@@ -5,6 +5,18 @@
 
         <!--  <el-button class="add-btn" type="primary" plain @click="addBag">添加包裹</el-button>-->
       </div>
+
+      <el-dialog title="添加碎纸" :visible.sync="addFlag">
+        <el-form :model="form">
+          <el-form-item >
+            <el-input v-model="bagId" placeholder="请输入包裹id" ></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="addFlag = false">取 消</el-button>
+          <el-button type="primary" @click="handleAdd">确 定</el-button>
+        </div>
+      </el-dialog>
       <div class="right-container">
         <div class="right-title">包裹列表</div>
 
@@ -35,6 +47,8 @@
         </el-table>
         <el-row class="finish-wrapper">
           <el-button type="success" plain @click="finishTatter">碎纸完成</el-button>
+          <el-button style="margin-right: 15px" type="warning" plain @click="addFlag = true">手动添加包裹</el-button>
+
         </el-row>
 
       </div>
@@ -50,10 +64,18 @@
       name: "tatterComponent",
       data(){
           return{
+            bagId:null,
+
             bagList:[],
             tatterId:null,
             codeInfo:null,
-            tmpInfo:null
+            tmpInfo:null,
+
+            addFlag:false,
+            formLabelWidth:'120px',
+            form:{
+
+            }
           }
       },
     watch:{
@@ -64,7 +86,7 @@
             orderPackageId:v.id
           };
           tatterScanCode(prm).then(res=>{
-            if (res.data.result.code === 200){
+            if (res.data.code === 200){
               this.getBagList()
             }
           })
@@ -75,7 +97,6 @@
       getPackageID(){
         this.tmpInfo = JSON.parse(this.codeInfo);
         this.codeInfo = null
-        console.log(this.codeInfo)
       },
       getBagList(){
         let prm = {
@@ -110,10 +131,31 @@
             })
           }
         })
+      },
+      handleAdd(){
+        let prm = {
+          paperShredderId:this.tatterId,
+          orderPackageId:parseInt(this.bagId)
+        };
+        tatterScanCode(prm).then(res=>{
+          if (res.data.code === 200){
+            this.$message({
+              message:"添加成功",
+              type:'success'
+            })
+            this.getBagList()
+            this.addFlag = false
+            this.$nextTick(()=>{
+              this.$refs.inputFocus.focus();
+            })
+          }
+        })
       }
     },
+
     mounted() {
         this.tatterId = this.$route.query.tatterInfo;
+        this.tatterId = parseInt(this.tatterId);
         this.getBagList()
     }
   }

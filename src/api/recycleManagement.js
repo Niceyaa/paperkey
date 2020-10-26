@@ -464,3 +464,13 @@ export function orderReceive(data){
   })
 }
 
+
+//訂單運輸軌跡
+export function orderTrail(data){
+  return request({
+    url:"/zmsys-retrieve/sys/orderTrail/selectOrderTrailList",
+    method: "post",
+    data
+  })
+}
+

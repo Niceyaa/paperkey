@@ -100,12 +100,12 @@
             <el-form-item label="地址">
               <span>{{ scope.row.address }}</span>
             </el-form-item>
-            <el-form-item label="代理商">
-              <span>{{ scope.row.agent.name }}</span>
+           <!-- <el-form-item label="代理商">
+              <span>{{ scope.row.agent&&scope.row.agent.name?scope.row.agent.name:"无" }}</span>
             </el-form-item>
             <el-form-item label="城市">
-              <span>{{ scope.row.city.name }}</span>
-            </el-form-item>
+              <span>{{ scope.row.city&&scope.row.city.name?scope.row.city.name:"无" }}</span>
+            </el-form-item>-->
             <el-form-item label="收入价格">
               <span>{{ scope.row.incomePrice }}</span>
             </el-form-item>
@@ -134,10 +134,10 @@
               <span>{{ scope.row.unitName }}</span>
             </el-form-item>
             <el-form-item label="回收过程">
-              <span>{{ scope.row.confRetrieveProcess.name }}</span>
+              <span>{{ scope.row.confRetrieveProcess&&scope.row.confRetrieveProcess.name?scope.row.confRetrieveProcess.name:"无" }}</span>
             </el-form-item>
             <el-form-item label="回收站">
-              <span>{{ scope.row.recycler.name }}</span>
+              <span>{{ scope.row.recycler&&scope.row.recycler.name?scope.row.recycler.name:"无" }}</span>
             </el-form-item>
             <el-form-item label="备注">
               <span>{{ scope.row.remark }}</span>
@@ -156,9 +156,9 @@
         width="100">
       </el-table-column>
       <el-table-column
-        prop="agent.name"
         label="代理商"
         width="80">
+        <template slot-scope="scope">{{ scope.row.agent&&scope.row.agent.name?scope.row.agent.name:"无" }}</template>
       </el-table-column>
 <!--
       <el-table-column
@@ -210,6 +210,7 @@
           <el-button v-if="scope.row.orderState<3"  plain type="primary" size="mini" @click="goToPostpone(scope.row)">延期管理</el-button>
 <!--          <el-button plain type="primary" size="mini" @click="goToPostpone(scope.row)">轨迹查询</el-button>-->
           <el-button v-if="scope.row.orderState===0||scope.row.orderState===1" plain type="warning" size="mini" @click="goToSendOrder(scope.row)">派单管理</el-button>
+          <el-button v-if="scope.row.orderState>=3||scope.row.orderState===100" plain type="warning" size="mini" @click="goToOrderTrail(scope.row)">运输轨迹</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -287,6 +288,14 @@
           query:{
             orderID:info.orderId,
             orderStatus:info.orderState
+          }
+        })
+      },
+      goToOrderTrail(info){
+        this.$router.push({
+          path:'/recycle/orderTrail',
+          query:{
+            orderID:info.orderId,
           }
         })
       },

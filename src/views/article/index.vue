@@ -23,19 +23,6 @@
           :value="item.categoryId">
         </el-option>
       </el-select>
-
-     <!-- <el-tree
-        node-key="categoryId"
-        show-checkbox
-        highlight-current
-        class="filter-tree"
-        :data="categoryData"
-        :props="defaultProps"
-        default-expand-all
-        :default-checked-keys="currentCategoryInfo.categoryId"
-        @node-click="categoryItemClick"
-        ref="tree">
-      </el-tree>-->
       <div class="right-container">
         <el-table
           :data="tableData"
@@ -47,11 +34,10 @@
             width="100">
           </el-table-column>
           <el-table-column
-            prop="categoryId"
-            label="分类Id"
-            width="80">
+            label="文章分类"
+            width="120">
             <template slot-scope="scope">
-              {{scope.row.articleCategory.categoryId}}
+              {{scope.row.articleCategory&&scope.row.articleCategory.categoryName?scope.row.articleCategory.categoryName:"无"}}
             </template>
           </el-table-column>
           <el-table-column
@@ -108,14 +94,13 @@
 <script>
 import {addArticle,updateArticle,deleteArticle,singleFind,articleList,articleCategoryList} from "../../api/articleManagement";
 import qs from "qs";
-import {agentDelete} from "../../api/angenManagement";
 
 export default {
   name: 'index',
   data() {
     return {
       keys:"",
-      categoryId:null,
+      categoryId:"",
       search:"",
       // 文章列表数据
       tableData: [],
@@ -131,6 +116,7 @@ export default {
   },
   watch: {
     categoryId(v){
+      console.log(11111)
       if (v === "a"){
         let prm = {
           "pageNum": 1,
@@ -146,17 +132,13 @@ export default {
     }
   },
   async mounted() {
+    this.getArticleList()
     this.getArticleCategoryList()
   },
   methods: {
-   /* handleClick(data,checked, node){
-      if(checked){
-        this.$refs.tree3.setCheckedKeys([data.categoryId]);
-      }
-    },
     handleCurrentChange(v){
-      this.getArticleList(v,this.currentCategoryInfo.categoryId)
-    },*/
+      this.getArticleList(v);
+    },
     goToNewArticle(){
       this.$router.push({
         path:'/article/newArticle',
@@ -165,12 +147,7 @@ export default {
         }
       })
     },
-    /*categoryItemClick(v,a,c){
-      this.$refs.tree.setCheckedNodes([v])
-      this.currentCategoryInfo = v;
-      console.log(v,a,c);
-    },*/
-    getArticleList(pageNum=1,cId){
+    getArticleList(pageNum=1,cId=null){
       let prm = {
         "categoryId": cId,
         "pageNum": pageNum,
@@ -189,12 +166,12 @@ export default {
       articleCategoryList(prm).then(res=>{
         this.categoryData = res.data.result.list;
         // this.categoryData.push({categoryId:"a",categoryName:"所有"})
-        this.categoryId = this.categoryData[0].categoryId;
-        this.getArticleList(1,this.categoryId);
+        /*this.categoryId = this.categoryData[0].categoryId;
+        this.getArticleList(1,this.categoryId);*/
       })
     },
     handleDelete(info){
-      this.$confirm('此操作将永久删除该分类, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除该文章信息, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -240,7 +217,7 @@ export default {
         })
     },
     resetList(){
-      this.getArticleCategoryList();
+      this.categoryId = null
       this.keys = ''
     }
   }

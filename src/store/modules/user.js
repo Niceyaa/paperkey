@@ -31,7 +31,6 @@ const mutations = {
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    console.log(userInfo)
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
@@ -52,7 +51,6 @@ const actions = {
 
   // get user info
   getInfo({ commit, state }) {
-    console.log(1111)
     return new Promise((resolve, reject) => {
       commit('SET_ROLES', "admin")
       commit('SET_NAME', "lcg")

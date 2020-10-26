@@ -19,8 +19,8 @@
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="状态" :label-width="formLabelWidth">
-          <el-radio v-model="form.status" label="1">启用</el-radio>
-          <el-radio v-model="form.status" label="0">禁用</el-radio>
+          <el-radio v-model="form.status" :label="true">启用</el-radio>
+          <el-radio v-model="form.status" :label="false">禁用</el-radio>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -32,11 +32,11 @@
       :data="tableData"
       border
       style="width: 100%">
-      <el-table-column
+      <!--<el-table-column
         prop="categoryId"
         label="分类Id"
         width="120">
-      </el-table-column>
+      </el-table-column>-->
       <el-table-column
         prop="categoryName"
         label="名称"

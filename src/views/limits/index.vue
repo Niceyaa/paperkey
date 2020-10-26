@@ -61,11 +61,6 @@
             width="120">
             <template slot-scope="scope">{{scope.row.subPermissions?scope.row.permissionCode:scope.row.subPermissionCode}}</template>
           </el-table-column>
-          <!--<el-table-column
-            prop="categoryName"
-            label="分类名称"
-            width="120">
-          </el-table-column>-->
           <el-table-column
             label="子权限"
             min-width="120">
@@ -293,7 +288,8 @@
         this.operateType = "edit";
         this.form.name = info.name;
         this.form.permissionCode = info.permissionCode;
-        this.form.type = info.categoryId;
+        this.form.categoryId = info.categoryId;
+        this.form.type = 0;
         this.addFlag = true;
         getList().then(res=>{
           this.limitType = res.data.result;

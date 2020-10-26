@@ -40,11 +40,23 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button plain @click="addFlag = false">取 消</el-button>
+        <el-button plain type="warning" @click="handFlag = true">手动添加</el-button>
         <el-button plain type="success" @click="saveHandle">入库并退出</el-button>
         <el-button plain type="primary" @click="continuePutIn">入库并继续</el-button>
       </div>
     </el-dialog>
 
+    <el-dialog title="手动添加" :visible.sync="handFlag">
+      <el-form :model="form">
+        <el-form-item >
+          <el-input placeholder="请输入包裹ID" v-model="bagId" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button plain @click="handFlag = false">取 消</el-button>
+        <el-button plain type="primary" @click="handAdd">确定</el-button>
+      </div>
+    </el-dialog>
 
     <el-row style="height: 1px;background: #8c939d"></el-row>
     <el-table
@@ -97,6 +109,9 @@
   export default {
     data() {
       return {
+        bagId:null,
+        handFlag:false,
+
         searchInfo:{
           name:null,
           endTime:null,
@@ -150,6 +165,7 @@
         if (v===null){
           return
         }else{
+          this.bagId = v.id
           // sendmsg
           let prm = qs.stringify({
             orderPackageId:v.id
@@ -160,32 +176,47 @@
             this.form.weight = res.data.result.weight
           })
         }
-
       }
     },
     methods: {
+      handAdd(){
+        // sendmsg
+        let prm = qs.stringify({
+          orderPackageId:parseInt(this.bagId)
+        })
+        bagDetail(prm).then(res=>{
+          if (res.data.code === 200){
+            this.form.packageSort = res.data.result.packageSort
+            this.form.packageNum = res.data.result.packageNum
+            this.form.weight = res.data.result.weight
+            this.handFlag = false
+          }
+
+        })
+      },
       getPackageId(){
+        console.log(this.form.weight)
         this.codeInfo = JSON.parse(this.form.weight);
         this.form.weight = null;
         /*console.log(this.codeInfo)*/
       },
 
       continuePutIn(){
-        document.getElementById("focusInput").focus()
 
          let prm = {
-           orderPackageId:this.currentPackageId,
-           weight:this.form.weight.length>0?this.form.weight:this.packageInfo.weight
+           orderPackageId:parseInt(this.bagId),
+           weight:this.form.weight
          }
          bagPutInAdd(prm).then(res=>{
            if (res.data.code === 200){
              this.$message({
-               title:"添加成功!",
+               message:res.data.msg,
                type:'success'
              })
              this.form.weight = null
              this.form.packageNum = null
              this.form.packageSort = null
+             document.getElementById("focusInput").focus()
            }
          })
       },
@@ -202,13 +233,13 @@
 
       saveHandle(){
         let prm = {
-          orderPackageId:this.currentPackageId,
-          weight:this.form.weight.length>0?this.form.weight:this.packageInfo.weight
+          orderPackageId:parseInt(this.bagId),
+          weight:this.form.weight
         }
         bagPutInAdd(prm).then(res=>{
           if (res.data.code === 200){
             this.$message({
-              title:"add success!",
+              message:"添加成功!",
               type:'success'
             })
             this.form.weight = null

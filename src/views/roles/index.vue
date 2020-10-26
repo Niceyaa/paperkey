@@ -15,7 +15,7 @@
           <el-form-item label="角色名" :label-width="formLabelWidth">
             <el-input v-model="addFormData.name" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="角色編碼" :label-width="formLabelWidth">
+          <el-form-item label="角色编码" :label-width="formLabelWidth">
             <el-input v-model="addFormData.codeName" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="代理商" :label-width="formLabelWidth">
@@ -34,12 +34,13 @@
       border
       :data="rolesList.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%">
+      <!--
       <el-table-column
         align="center"
         label="角色ID"
         width="100"
         prop="roleId">
-      </el-table-column>
+      </el-table-column>-->
       <el-table-column
         align="center"
         label="名称"
@@ -58,32 +59,10 @@
         width="100"
         prop="agentVo.name">
       </el-table-column>
-     <!-- <el-table-column
-        align="center"
-        label="权限"
-        width="140">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="success"
-            @click="openLimitCom(scope.row)">查看</el-button>
-        </template>
 
-      </el-table-column>
-      <el-table-column
-        align="center"
-        label="用户"
-        width="140">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="success"
-            @click="openUserCom(scope.row)">查看</el-button>
-        </template>
-      </el-table-column>-->
       <el-table-column
         label="操作"
-        min-width="300"
+        min-width="350"
         align="center">
         <template slot-scope="scope">
           <el-button
@@ -97,7 +76,7 @@
           <el-button
             size="mini"
             type="primary"
-            @click="editRoleInfo(scope.row)">編輯</el-button>
+            @click="editRoleInfo(scope.row)">编辑</el-button>
           <el-button
             size="mini"
             type="danger"
@@ -119,8 +98,6 @@
 </template>
 
 <script>
-
-
   import {rolesList,rolesAdd,rolesDelete,rolesUpdate} from "../../api/roleManagement";
   import {agentList} from "../../api/angenManagement";
 

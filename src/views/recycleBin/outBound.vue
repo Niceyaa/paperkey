@@ -31,7 +31,7 @@
 
     </el-row>
 
-    <el-dialog title="添加入库信息" :visible.sync="addFlag">
+    <el-dialog title="添加出库信息" :visible.sync="addFlag">
       <el-form :model="form">
         <el-form-item label="跟车人" :label-width="formLabelWidth">
           <el-input v-model="form.carFollowingUser" autocomplete="off"></el-input>
@@ -203,7 +203,7 @@
       <el-table-column
         fixed="right"
         label="操作"
-        min-width="100">
+        min-width="300">
         <template slot-scope="scope">
           <el-button v-if="!scope.row.isFinishSettlement&&scope.row.isFinishWarehouseOut" @click="balanceOpen(scope.row)" type="primary" size="small">结算录入</el-button>
           <el-button v-if="!scope.row.isFinishSettlement" @click="addPill(scope.row)" type="warning" size="small">添加纸饼</el-button>

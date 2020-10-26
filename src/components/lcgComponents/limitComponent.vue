@@ -128,12 +128,10 @@
         }
       },
       matchLcgId(all,item){
-        console.log("hhhhh",all,item)
         for (let i=0;i<item.length;i++){
           for (let j=0;j<all.length;j++){
             if (item[i].permissionId === all[j].permissionId){
               if (item[i].subPermissions&&item[i].subPermissions.length>0&&all[j].subPermissions&&all[j].subPermissions.length>0){
-                console.log("aaaaa",item[i].subPermissions,all[j].subPermissions)
                 this.matchLcgId(all[j].subPermissions,item[i].subPermissions);
               }else{
                 if (item[i].subPermissionId&&all[j].subPermissionId&&item[i].subPermissionId===all[j].subPermissionId){
@@ -147,7 +145,7 @@
 
       deleteChildItem(info,id){
         console.log(info)
-        this.$confirm('此操作将永久删除该子自权限, 是否继续?', '提示', {
+        this.$confirm('此操作将永久取消该子权限, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'

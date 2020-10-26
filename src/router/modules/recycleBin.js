@@ -96,6 +96,13 @@ const recycleBin = {
       component: () => import('@/views/recycleBin/outBound'),
       name: '装车出库',
       meta: { title: '装车出库', noCache: true, icon: 'table' }
+    },
+    {
+      path: 'orderTrail',
+      component: () => import('@/views/recycleBin/orderTrail'),
+      name: '订单运输轨迹',
+      hidden: true,
+      meta: { title: '订单运输轨迹', noCache: true, icon: 'table' }
     }
   ]
 }

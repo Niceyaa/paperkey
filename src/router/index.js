@@ -434,15 +434,25 @@ export const asyncRoutes = [
     path: '/agent',
     component: Layout,
     redirect: '/agent/index',
+    name: '代理商管理 ',
+    meta: { title: '代理商管理 ', icon: 'documentation', roles:'admin'},
     children: [
       {
         path: 'index',
         component: () => import('@/views/agent/index'),
         name: '代理商管理 ',
         meta: { title: '代理商管理 ', icon: 'documentation', roles:'admin'}
-      }
+      },
+      {
+        path: 'contacts',
+        component: () => import('@/views/agent/contacts'),
+        name: '联系人 ',
+        hidden:true,
+        meta: { title: '联系人 ', icon: 'documentation', roles:'admin'}
+      },
     ]
   },
+
   // 积分商城管理
   {
     path: '/integration',
@@ -618,6 +628,32 @@ export const asyncRoutes = [
         component: () => import('@/components/lcgComponents/childLimits'),
         name: '子权限管理',
         meta: { title: '子权限管理', icon: 'user', noCache: true, roles: "admin" }
+      }
+    ]
+  },
+  {
+    path: '/invoice',
+    component: Layout,
+    redirect: '/invoice/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/APPUser/invoice'),
+        name: '发票管理',
+        meta: { title: '发票管理', icon: 'user', noCache: true, roles: "admin" }
+      }
+    ]
+  },
+  {
+    path: '/invoice',
+    component: Layout,
+    redirect: '/invoice/user',
+    children: [
+      {
+        path: 'user',
+        component: () => import('@/views/APPUser/index'),
+        name: '查询用户信息',
+        meta: { title: '查询用户信息', icon: 'user', noCache: true, roles: "admin" }
       }
     ]
   }

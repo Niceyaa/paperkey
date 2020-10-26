@@ -11,6 +11,7 @@ const service = axios.create({
   // baseURL: "/dpc", // url = base url + request url
   // baseURL: "http://192.168.1.165:19082",
   baseURL: "http://192.168.2.31:19082",
+  // baseURL: "http://192.168.1.56:19082",
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
@@ -54,14 +55,28 @@ service.interceptors.response.use(
 
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 200) {
-      Message({
-        message: res.msg || 'Error',
-        type: 'error',
-        duration: 5 * 1000
-      })
+      if (res.code === 850){
+        let msg = res.msg;
+        let idx = msg.indexOf("[");
+        const prm = msg.substring(0,idx)
+        let errMsg = prm==="name"?"菜单名称重复":"请求地址重复";
+        Message({
+          message: errMsg || 'Error',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }else{
+        Message({
+          message: res.msg || 'Error',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+
+
 
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === 1111 || res.code === 50012 || res.code === 50014) {
+     /* if (res.code === 1111 || res.code === 50012 || res.code === 50014) {
         // to re-login
         MessageBox.confirm('登录身份已过期，请重新登录', '登录过期', {
           confirmButtonText: '确定',
@@ -72,7 +87,7 @@ service.interceptors.response.use(
             location.reload()
           })
         })
-      }
+      }*/
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
       return response

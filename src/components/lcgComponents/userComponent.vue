@@ -21,11 +21,11 @@
           border
           :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
           style="width: 100%">
-          <el-table-column
+          <!--<el-table-column
             label="用户ID"
             width="80"
             prop="sysUserVo.sysUserId">
-          </el-table-column>
+          </el-table-column>-->
           <el-table-column
             label="用户名"
             width="100"
@@ -34,7 +34,7 @@
           <el-table-column
             label="代理商"
             width="120"
-            prop="sysUserVo.agentId">
+            prop="sysUserVo.agentName">
           </el-table-column>
           <el-table-column
             label="帐号"
@@ -47,7 +47,7 @@
             width="200"
             prop="sysUserVo.state">
             <template slot-scope="scope">
-              <el-switch style="display: block" disabled v-model="scope.row.state===0" active-color="#13ce66" inactive-color="#ff4949" active-text="on" inactive-text="off">
+              <el-switch style="display: block" disabled v-model="scope.row.sysUserVo.state===0" active-color="#13ce66" inactive-color="#ff4949" active-text="正常" inactive-text="禁用">
               </el-switch>
             </template>
           </el-table-column>

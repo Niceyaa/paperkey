@@ -36,7 +36,17 @@
         <el-button type="success" plain @click="addOpen">添加纸饼</el-button>
       </el-row>
     </div>
-
+    <el-dialog title="添加包裹" :visible.sync="handFlag">
+      <el-form :model="form">
+        <el-form-item >
+          <el-input v-model="bagId" placeholder="请输入包裹id" ></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="handFlag = false">取 消</el-button>
+        <el-button type="primary" @click="handAdd">确 定</el-button>
+      </div>
+    </el-dialog>
     <div class="right-container">
       <div class="right-title">包裹列表</div>
 
@@ -65,6 +75,7 @@
       </el-table>
       <el-row class="finish-wrapper">
         <el-button type="success" plain @click="finishZip">压缩完成</el-button>
+        <el-button style="margin-right: 15px" type="warning" plain @click="handFlag = true">手动添加包裹</el-button>
       </el-row>
 
     </div>
@@ -81,6 +92,9 @@
     name: "tatterComponent",
     data(){
       return{
+        bagId: null,
+        handFlag:false,
+
         addFlag:false,
         formLabelWidth:"120px",
         form:{
@@ -100,8 +114,8 @@
         if (v!==null){
           let prm = {
             paperCompressId:this.compressId,
-            // orderPackageId:v.id
-            orderPackageId:1
+            orderPackageId:v.id
+            // orderPackageId:1
           };
           paperZipScanCode(prm).then(res=>{
             if (res.data.code === 200){
@@ -146,7 +160,7 @@
         let prm = {
           "pageNum": 1,
           "pageSize": 20,
-          paperShredderId:this.compressId
+          paperCompressId:this.compressId
         }
         bagList(prm).then(res=>{
           this.bagList = res.data.result.list;
@@ -182,6 +196,26 @@
             })
             this.$router.push({
               path:"/recycle/paperCompress"
+            })
+          }
+        })
+      },
+      handAdd(){
+        let prm = {
+          paperCompressId:this.compressId,
+          // orderPackageId:v.id
+          orderPackageId:parseInt(this.bagId)
+        };
+        paperZipScanCode(prm).then(res=>{
+          if (res.data.code === 200){
+            this.$message({
+              type:"success",
+              message:res.data.msg
+            })
+            this.handFlag = false
+            this.getBagList()
+            this.$nextTick(()=>{
+              this.$refs.inputFocus.focus();
             })
           }
         })
